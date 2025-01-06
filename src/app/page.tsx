@@ -11,9 +11,13 @@ export default function Home() {
           <Link href="/facebook">
             <span className={app2['red']}>Facebook</span>
           </Link>
-          </li>
-        <li><a href="/youtube">Youtube</a></li>
-        <li><a href="/tiktok">Tiktok</a></li>
+        </li>
+        <li>
+          <Link href="/youtube">Youtube</Link>
+        </li>
+        <li>
+          <Link href="/tiktok">Tiktok</Link>
+        </li>
       </ul>
 
       <TablePage />
