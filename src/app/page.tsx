@@ -5,18 +5,35 @@ import app from '@/styles/app.module.css';
 import app2 from '@/styles/app2.module.css';
 import TablePage from '@/components/Table';
 import { useEffect } from 'react';
+import useSWR from 'swr';
 
 export default function Home() {
 
-  const fetchData = async() => {
-    const res = await fetch('http://localhost:8000/blogs');
-    const data = await res.json();
-    console.log(data);
-  }
+  const fetcher = (url: string) => fetch(url).then(res => res.json())
 
-  useEffect(() => {
-    fetchData();
-  }, [])
+  const { data, error, isLoading } = useSWR(
+    'http://localhost:8000/blogs', 
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
+  )
+
+
+
+  console.log('>>> check data: ' ,data);
+
+  // const fetchData = async() => {
+  //   const res = await fetch('http://localhost:8000/blogs');
+  //   const data = await res.json();
+  //   console.log(data);
+  // }
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [])
 
   return (
     <div>
