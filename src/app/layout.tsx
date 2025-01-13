@@ -3,8 +3,8 @@
 // import './globals.css'
 import { Inter } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
 import Container from 'react-bootstrap/Container';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -27,7 +27,7 @@ export default function RootLayout({
           {children}
         </Container>
         <Footer />
-        </body>
+      </body>
     </html>
   )
 }
