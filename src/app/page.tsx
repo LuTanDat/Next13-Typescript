@@ -21,20 +21,9 @@ export default function Home() {
     }
   )
 
+  // console.log('>>> check data: ' ,data); // [{}, {}, {}, {}, {}, {}, {},...]
 
-
-  console.log('>>> check data: ' ,data);
-
-  // const fetchData = async() => {
-  //   const res = await fetch('http://localhost:8000/blogs');
-  //   const data = await res.json();
-  //   console.log(data);
-  // }
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [])
-
+  if(!data) return <div>Loading...</div>
   return (
     <div>
       <ul>
@@ -51,7 +40,7 @@ export default function Home() {
         </li>
       </ul>
 
-      <TablePage />
+      <TablePage blogs = {data}/>
     </div>
   )
 }
