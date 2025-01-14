@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { toast } from 'react-toastify';
 
 interface IProps {
   show: boolean;
@@ -24,7 +25,8 @@ function CreateModal(props: IProps) {
   }
 
   const handleSubmit = () => {
-    console.log(title, author, content)
+    console.log(title, author, content);
+    toast.success('success');
   }
 
   return (
