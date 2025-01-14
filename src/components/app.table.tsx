@@ -6,6 +6,8 @@ import CreateModal from "./create.modal";
 import UpdateModal from "./update.modal";
 import DeleteModal from "./delete.modal";
 import Link from "next/link";
+import { toast } from 'react-toastify';
+import { mutate } from 'swr';
 
 interface IProps {
   blogs: IBlog[];
@@ -26,9 +28,32 @@ const TablePage = (props: IProps) => {
       setShowModalUpdate(true);
     }
 
-    if (type === "DELETE") {
-      setBlog(blog);
-      setShowModalDelete(true);
+    // if (type === "DELETE") {
+    //   setBlog(blog);
+    //   setShowModalDelete(true);
+    // }
+  }
+
+  const handleDeleteBlog = (id: number) => {
+    if (confirm(`Are you sure delete blog: id = ${id}!`) == true) {
+      // post api theo cach truyen thong
+      fetch(`http://localhost:8000/blogs/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+        .then(res => {
+          if (res) {
+            toast.success('Blog deleted successfully');
+            // cho biết cần gọi lại api, lúc này chỗ nào có "link url" này sẽ tự động gọi lại api
+            // cụ thể file src/app/page.tsx sẽ gọi lại api dòng 12
+            mutate('http://localhost:8000/blogs');
+          }
+        });
+    } else {
+      console.log("You canceled!")
     }
   }
 
@@ -70,7 +95,7 @@ const TablePage = (props: IProps) => {
                     </Button>
                     <Button
                       variant="danger"
-                      onClick={() => handleShowBlog('DELETE', blog)}
+                      onClick={() => handleDeleteBlog(blog.id)}
                     >
                       Delete
                     </Button>
@@ -90,12 +115,12 @@ const TablePage = (props: IProps) => {
         blog={blog}
         setBlog={setBlog}
       />
-      <DeleteModal
+      {/* <DeleteModal
         show={showModalDelete}
         setShow={setShowModalDelete}
         blog={blog}
         setBlog={setBlog}
-      />
+      /> */}
     </>
   );
 };
