@@ -40,7 +40,9 @@ export default function Home() {
         </li>
       </ul>
 
-      <TablePage blogs={data} />
+      <TablePage
+        blogs={data?.sort((a: any, b: any) => b.id - a.id)}
+      />
     </div>
   )
 }

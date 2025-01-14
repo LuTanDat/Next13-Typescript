@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
+import { mutate } from 'swr';
+
 
 interface IProps {
   show: boolean;
@@ -25,8 +27,38 @@ function CreateModal(props: IProps) {
   }
 
   const handleSubmit = () => {
-    console.log(title, author, content);
-    toast.success('success');
+
+    if (!title) {
+      toast.error('Title is required');
+      return;
+    }
+    if (!author) {
+      toast.error('Author is required');
+      return;
+    }
+    if (!content) {
+      toast.error('Content is required');
+      return;
+    }
+
+    // post api theo cach truyen thong
+    fetch('http://localhost:8000/blogs', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title, author, content })
+    }).then(res => res.json())
+      .then(res => {
+        if (res) {
+          toast.success('Blog created successfully');
+          handleClose();
+          // cho biết cần gọi lại api, lúc này chỗ nào có "link url" này sẽ tự động gọi lại api
+          // cụ thể file src/app/page.tsx sẽ gọi lại api dòng 12
+          mutate('http://localhost:8000/blogs');
+        }
+      });
   }
 
   return (
