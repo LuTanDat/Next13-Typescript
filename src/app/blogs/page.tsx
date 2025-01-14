@@ -10,6 +10,7 @@ const BlogsPage = () => {
   const { data, error, isLoading } = useSWR(
     'http://localhost:8000/blogs',
     fetcher,
+    // lưu lại cache tránh gọi lại api khi không cần thiết
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,

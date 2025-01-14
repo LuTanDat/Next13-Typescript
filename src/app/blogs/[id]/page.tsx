@@ -12,11 +12,12 @@ const ViewDetailBlog = ({ params }: { params: { id: string } }) => {
   const { data, error, isLoading } = useSWR(
     `http://localhost:8000/blogs/${params.id}`,
     fetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false
-    }
+    // Mỗi lần re-render page này luôn gọi api để get blog mới nhất -> off đống dưới
+    // {
+    //   revalidateIfStale: false,
+    //   revalidateOnFocus: false,
+    //   revalidateOnReconnect: false
+    // }
   )
   // console.log('>>> check data: ', data); // {}
 
