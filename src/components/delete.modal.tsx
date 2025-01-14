@@ -61,7 +61,7 @@ function DeleteModal(props: IProps) {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        size='lg'
+      // size='lg'
       >
         <Modal.Header closeButton>
           <Modal.Title>Delete a blog</Modal.Title>

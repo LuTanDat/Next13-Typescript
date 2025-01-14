@@ -19,7 +19,7 @@ const TablePage = (props: IProps) => {
   const [blog, setBlog] = useState<IBlog | null>(null); // blog user clicked on
   const [showModalCreate, setShowModalCreate] = useState<boolean>(false);
   const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
-  const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
+  // const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
 
 
   const handleShowBlog = (type: string, blog: IBlog) => {
