@@ -3,6 +3,8 @@ import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
 import CreateModal from "./create.modal";
+import UpdateModal from "./update.modal";
+import ViewModal from "./view.modal";
 
 interface IProps {
   blogs: IBlog[];
@@ -10,16 +12,30 @@ interface IProps {
 
 const TablePage = (props: IProps) => {
   const { blogs } = props;
-  // console.log("check blogs: ", blogs);
 
-  const [show, setShow] = useState<boolean>(false);
+  const [blog, setBlog] = useState<IBlog | null>(null); // blog user clicked on
+  const [showModalCreate, setShowModalCreate] = useState<boolean>(false);
+  const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
+  const [showModalView, setShowModalView] = useState<boolean>(false);
 
+
+  const handleShowBlog = (type: string, blog: IBlog) => {
+    if (type === "VIEW") {
+      setBlog(blog);
+      setShowModalView(true);
+    }
+
+    if (type === "EDIT") {
+      setBlog(blog);
+      setShowModalUpdate(true);
+    }
+  }
 
   return (
     <>
       <div className="mt-3 mb-2" style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h3>Table Blogs</h3>
-        <Button variant="secondary" onClick={() => setShow(true)}>Add New</Button>
+        <Button variant="secondary" onClick={() => setShowModalCreate(true)}>Add New</Button>
       </div>
       <Table striped bordered hover>
         <thead>
@@ -39,8 +55,18 @@ const TablePage = (props: IProps) => {
                   <td>{blog.title}</td>
                   <td>{blog.author}</td>
                   <td>
-                    <Button variant="primary">View</Button>
-                    <Button variant="warning" className="mx-3">Edit</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleShowBlog('VIEW', blog)}
+                    >
+                      View
+                    </Button>
+                    <Button
+                      variant="warning" className="mx-3"
+                      onClick={() => handleShowBlog('EDIT', blog)}
+                    >
+                      Edit
+                    </Button>
                     <Button variant="danger">Delete</Button>
                   </td>
                 </tr>
@@ -49,8 +75,20 @@ const TablePage = (props: IProps) => {
         </tbody>
       </Table>
       <CreateModal
-        show={show}
-        setShow={setShow}
+        show={showModalCreate}
+        setShow={setShowModalCreate}
+      />
+      <ViewModal
+        show={showModalView}
+        setShow={setShowModalView}
+        blog={blog}
+        setBlog={setBlog}
+      />
+      <UpdateModal
+        show={showModalUpdate}
+        setShow={setShowModalUpdate}
+        blog={blog}
+        setBlog={setBlog}
       />
     </>
   );
