@@ -4,8 +4,8 @@ import { Button } from "react-bootstrap";
 import { useState } from "react";
 import CreateModal from "./create.modal";
 import UpdateModal from "./update.modal";
-import ViewModal from "./view.modal";
 import DeleteModal from "./delete.modal";
+import Link from "next/link";
 
 interface IProps {
   blogs: IBlog[];
@@ -17,16 +17,10 @@ const TablePage = (props: IProps) => {
   const [blog, setBlog] = useState<IBlog | null>(null); // blog user clicked on
   const [showModalCreate, setShowModalCreate] = useState<boolean>(false);
   const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
-  const [showModalView, setShowModalView] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
 
 
   const handleShowBlog = (type: string, blog: IBlog) => {
-    if (type === "VIEW") {
-      setBlog(blog);
-      setShowModalView(true);
-    }
-
     if (type === "EDIT") {
       setBlog(blog);
       setShowModalUpdate(true);
@@ -62,12 +56,12 @@ const TablePage = (props: IProps) => {
                   <td>{blog.title}</td>
                   <td>{blog.author}</td>
                   <td>
-                    <Button
-                      variant="primary"
-                      onClick={() => handleShowBlog('VIEW', blog)}
+                    <Link
+                      className="btn btn-primary"
+                      href={`/blogs/${blog.id}`}
                     >
                       View
-                    </Button>
+                    </Link>
                     <Button
                       variant="warning" className="mx-3"
                       onClick={() => handleShowBlog('EDIT', blog)}
@@ -89,12 +83,6 @@ const TablePage = (props: IProps) => {
       <CreateModal
         show={showModalCreate}
         setShow={setShowModalCreate}
-      />
-      <ViewModal
-        show={showModalView}
-        setShow={setShowModalView}
-        blog={blog}
-        setBlog={setBlog}
       />
       <UpdateModal
         show={showModalUpdate}
