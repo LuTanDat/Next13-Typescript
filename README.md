@@ -1,3 +1,11 @@
+## 6.1
+
+### Tự học NextJS Cơ Bản (với React và TypeScript)
+
+&nbsp;
+&nbsp;
+&nbsp;
+
 ## Các bước cần làm sau khi clone source code:
 
 ### 1. Cài đặt thư viện: npm i
